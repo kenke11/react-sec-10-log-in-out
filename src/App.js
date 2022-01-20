@@ -1,13 +1,32 @@
+import React, {useState} from "react";
 import './App.css';
+import Header from "./components/Layout/Header";
+import Meals from "./components/Meals/Meals";
+import Cart from "./components/Cart/Cart";
+import CartProvider from "./components/store/CartProvider";
 
 function App() {
-  return (
-    <div>
-      <h1 className="text-3xl font-bold underline text-red-800">
-        Hello world!
-      </h1>
-    </div>
-  );
+    const [cartIsShown, setCartIsShown] = useState(false);
+
+    const showCartHandler = () => {
+        setCartIsShown(true);
+    }
+
+    const hideCartHandler = () => {
+        setCartIsShown(false)
+    }
+
+    return (
+        <CartProvider>
+            {cartIsShown && <Cart onClose={hideCartHandler}/>}
+
+            <Header onShowCart={showCartHandler} />
+
+            <main>
+                <Meals/>
+            </main>
+        </CartProvider>
+    );
 }
 
 export default App;
